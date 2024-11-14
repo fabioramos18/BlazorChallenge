@@ -39,4 +39,3 @@ Para rodar o projeto localmente, você precisará de:
 - **.NET 8**: Plataforma de desenvolvimento utilizada para construir o backend da aplicação.
 - **BootStrap & CSS**: Estilização do frontend.
 - **Azure**: Hospedagem do projeto na plataforma Azure(azure web apps).
-onível localmente no seu navegador em `https://localhost:5001`.
