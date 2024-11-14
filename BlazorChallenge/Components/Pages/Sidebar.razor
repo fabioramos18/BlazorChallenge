@@ -1,0 +1,47 @@
+﻿@using BlazorChallenge.Shared
+@using System
+
+<div class="options-sidebar" >
+    @foreach (var option in Options)
+    {
+        <SideBarItem Titulo="@option.Titulo"
+                     IsEditing="@option.IsEditing"
+                     IsActive="@option.IsActive" 
+                     Completed="@option.Completed"/>
+    }
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        // Inicializa a lista com os dados das opções, agora incluindo um valor para Titulo
+        Options = new List<Option>
+        {
+            new Option { Id = 1, Titulo = "Opção 1", IsEditing = false, IsActive = false,Completed = true },
+            new Option { Id = 2, Titulo = "Opção 2", IsEditing = false, IsActive = false, Completed = true },
+            new Option { Id = 3, Titulo = "Opção 3", IsEditing = false, IsActive = false, Completed = true },
+            new Option { Id = 4, Titulo = "Opção 4", IsEditing = false, IsActive = false, Completed = true },
+            new Option { Id = 5, Titulo = "Opção 5", IsEditing = false, IsActive = false, Completed = true },
+            new Option { Id = 6, Titulo = "Opção 6", IsEditing = false, IsActive = false, Completed = true },
+            new Option { Id = 7, Titulo = "Opção 7", IsEditing = false, IsActive = false, Completed = true },
+            new Option { Id = 8, Titulo = "Opção 8", IsEditing = false, IsActive = false, Completed = true },
+            new Option { Id = 9, Titulo = "Opção 9", IsEditing = false, IsActive = false, Completed = true },
+            new Option { Id = 10, Titulo = "Opção 10", IsEditing = true, IsActive = true , Completed = false},
+            new Option { Id = 11, Titulo = "Opção 11", IsEditing = false, IsActive = false, Completed = false },
+            new Option { Id = 12, Titulo = "Opção 12", IsEditing = false, IsActive = false, Completed = false }
+        };
+    }
+
+    // Remover o construtor com parâmetros para que Blazor possa instanciar o componente corretamente
+    public class Option
+    {
+        public int Id { get; set; }
+        public string? Titulo { get; set; }  
+        public bool IsEditing { get; set; }
+        public bool IsActive { get; set; }
+        public bool Completed { get; set; }
+    }
+
+    // Propriedade para armazenar a lista de opções
+    public List<Option> Options { get; set; } = new List<Option>(); // Inicializa a lista como vazia
+}

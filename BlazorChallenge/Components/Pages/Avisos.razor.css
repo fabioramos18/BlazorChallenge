@@ -1,0 +1,13 @@
+﻿.content-wrapper {
+    display: grid;
+    justify-content: center;
+    padding: 2rem 4rem;
+    grid-template-columns: 287px 1fr;
+    gap: 2rem;
+}
+@media (max-width: 768px) {
+    .content-wrapper {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+}

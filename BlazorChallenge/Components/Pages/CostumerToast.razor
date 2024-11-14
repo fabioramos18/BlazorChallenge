@@ -1,0 +1,16 @@
+﻿@using Microsoft.AspNetCore.Components
+@inherits ComponentBase
+
+<div class="custom-toast" style="display: @(ShowToast ? "block" : "none");">
+    <div class="toast-message">
+        @if (SelectedCount > 0)
+        {
+            <p>@SelectedCount checkboxes selecionadas</p>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter] public int SelectedCount { get; set; } // Número de checkboxes selecionadas
+    [Parameter] public bool ShowToast { get; set; }    // Controla a exibição do toast
+}

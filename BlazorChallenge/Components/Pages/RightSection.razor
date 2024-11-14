@@ -1,0 +1,180 @@
+﻿@using BlazorChallenge.Shared
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using System.Linq
+@inject IJSRuntime JS
+
+<div class="main-content">
+    <div class="section-nav">
+        <h2 class="section-header-title">Opção 10</h2>
+        <div class="d-flex justify-content-end align-items-center gap-1 py-2 px-3 rounded">
+            <button class="btn btn-link text-decoration-none d-flex align-items-center gap-2 text-dark-purple fw-medium">
+                <img src="icons/IcnFloaterButtonPrevious.svg" alt="Previous" class="icon-svg">
+
+                <span class="hide-on-mobile">ANTERIOR</span>
+            </button>
+            <button class="btn btn-link text-decoration-none d-flex align-items-center gap-2 text-dark-purple fw-medium">
+                <span class="hide-on-mobile">SEGUINTE</span>
+                <img src="icons/IcnFloaterButtonNext.svg" alt="Previous" class="icon-svg">
+
+            </button>
+        </div>
+    </div>
+
+    <p class="required-text text-primary">* Campos de preenchimento obrigatório</p>
+
+    <Card Title="Tipo de taxa *">
+        <div class="form-group">
+            <p class="fw-bold required-text">Adicionar tipo de taxa</p>
+            <div class="form-select-field">
+                <select class="form-select">
+                    <option selected>Selecionar</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+        </div>
+    </Card>
+
+    <Card Title="Contar *">
+        <div class="form-group">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
+                <label class="form-check-label" for="inlineRadio1">1</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                <label class="form-check-label" for="inlineRadio2">2</label>
+            </div>
+        </div>
+    </Card>
+    <!-- Section 3: Tax Table -->
+    <Card Title="Taxa *">
+        <div class="tax-section">
+            <div class="tax-header section-header">
+                
+                <div class="form-check form-switch">
+                    <div class="d-flex gap-5">
+                        <label for="flexSwitchCheckChecked" class="toggle-label fw-bold">Adicionar taxa por localização</label>
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                    </div>
+
+                </div>
+    
+
+        <CustomButton ButtonText="ADICIONAR TAXA" CssClass="header-btn-outlined" IconSrc="icons/icnAdd.svg" />
+
+            </div>
+
+
+            <table class="tax-table">
+                <thead>
+                    <tr>
+                        <!-- Checkbox para selecionar todas as linhas -->
+                        <th>
+                            <div class="checkbox-wrapper">
+                                <input class="form-check-input checkbox" type="checkbox" id="selectAllCheckbox" @onchange="SelectAllRows">
+                            </div>
+                        </th>
+                        <th>NUTS II</th>
+                        <th>NUTS III</th>
+                        <th>Concelho</th>
+                        <th>Taxa (%)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in taxDataList)
+                    {
+                        <tr>
+                            <!-- Checkbox individual de cada linha -->
+                            <td data-label="Selecionar">
+                                <div class="checkbox-wrapper">
+                                    <input class="form-check-input checkbox row-checkbox" type="checkbox" @onchange="UpdateCount">
+                                </div>
+                            </td>
+                            <td data-label="NUTS II">@item.NutsII</td>
+                            <td data-label="NUTS III">@item.NutsIII</td>
+                            <td data-label="Concelho">@item.Concelho</td>
+                            <td data-label="Taxa (%)">@item.Taxa%</td>
+                            <td data-label="Ações">
+                                <button class="btn btn-trash">
+                                    <img src="icons/IcnTrash.svg" alt="Delete" class="icon-svg">
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <!-- Pagination -->
+            <div class="pagination-wrapper">
+                <div class="items-per-page">
+                    <span>1 de 2 páginas (23 itens)</span>
+                    <select class="items-select">
+                        <option>10</option>
+                    </select>
+                    <span>itens por página</span>
+                </div>
+                <div class="pagination">
+                    <button class="page-nav">«</button>
+                    <button class="page-number active">1</button>
+                    <button class="page-number">2</button>
+                    <button class="page-nav">»</button>
+                </div>
+            </div>
+        </div>
+    </Card>
+    <div id="toast" class="toast">
+        <p></p>
+    </div>
+</div>
+@code {
+    private List<TaxData> taxDataList = new List<TaxData>
+    {
+        new TaxData { IsSelected = false, NutsII = "Norte", NutsIII = "Ave", Concelho = "Fafe", Taxa = 25 },
+        new TaxData { IsSelected = false, NutsII = "Norte", NutsIII = "Área Metropolitana do Porto", Concelho = "Matosinhos", Taxa = 75 }
+    };
+
+    public class TaxData
+    {
+        public bool IsSelected { get; set; }
+        public string NutsII { get; set; }
+        public string NutsIII { get; set; }
+        public string Concelho { get; set; }
+        public int Taxa { get; set; }
+    }
+
+    // Chamado ao clicar no checkbox "Select All"
+    private async Task SelectAllRows(ChangeEventArgs e)
+    {
+        bool isChecked = (bool)e.Value;
+        await JS.InvokeVoidAsync("toggleSelectAll", isChecked);
+    }
+
+    // Chamado quando um checkbox individual é selecionado
+    private async Task UpdateCount()
+    {
+        await JS.InvokeVoidAsync("updateSelectedCount");
+    }
+}
+
+<script>
+    window.toggleSelectAll = function (isChecked) {
+        const checkboxes = document.querySelectorAll('.row-checkbox');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = isChecked;
+        });
+        updateSelectedCount();
+    };
+
+    window.updateSelectedCount = function () {
+        const selectedCheckboxes = document.querySelectorAll('.row-checkbox:checked').length;
+        if (selectedCheckboxes > 0) {
+            document.getElementById('toast').style.display = 'flex';
+            document.getElementById('toast').innerText = `${selectedCheckboxes} taxas selecionadas`;
+        } else {
+            document.getElementById('toast').style.display = 'none';
+        }
+    };
+</script>

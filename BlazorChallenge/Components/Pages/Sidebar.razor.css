@@ -1,0 +1,13 @@
+﻿.options-sidebar {
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+}
+@media (max-width: 768px) {
+    .options-sidebar {
+        width: 100%;
+        padding: 1rem;
+        border: none;
+        border-radius: 0;
+    }
+}

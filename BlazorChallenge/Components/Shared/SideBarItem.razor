@@ -1,0 +1,21 @@
+﻿@namespace BlazorChallenge.Shared
+@using System
+
+<div class="option-item @(IsActive ? "active" : "")">
+    <span>@Titulo</span>
+    @if (Completed)
+    {
+        <img src="icons/IcnCheckOutlined.svg" alt="Completed" class="icon-svg">
+    }
+    else if (IsEditing)
+    {
+        <img src="icons/IcnLoading.svg" alt="Editing" class="icon-svg">
+    }
+</div>
+
+@code {
+    [Parameter] public string? Titulo { get; set; }
+    [Parameter] public bool IsEditing { get; set; }
+    [Parameter] public bool IsActive { get; set; }
+    [Parameter] public bool Completed { get; set; }
+}

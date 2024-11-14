@@ -1,0 +1,22 @@
+﻿@using BlazorChallenge.Shared
+
+<div class="avisos-header sub-header">
+    <div class="header-left">
+        <a href="#" class="back-link">
+            <img src="icons/IcnArrowLeft.svg" alt="Back" class="icon-svg">
+        </a>
+        <div class="title-wrapper">
+            <span class="subtitle">Avisos</span>
+            <p class="main-title fs-1">Novo Aviso</p>
+        </div>
+        <div class="status">
+            <img src="icons/IcnPencil.svg" alt="Edit" class="icon-svg">
+            <span class="status-text">em preenchimento</span>
+        </div>
+    </div>
+    <div class="header-actions d-flex gap-2">
+        <CustomButton ButtonText="GUARDAR ALTERAÇÕES" CssClass="header-btn-outlined" IconSrc="icons/icnSave.svg" />
+        <CustomButton ButtonText="VALIDAR" CssClass="header-btn-outlined" />
+        <CustomButton ButtonText="PUBLICAR" CssClass="header-btn-disabled" IconSrc="icons/IcnCheck.svg" IsDisabled="true" />
+    </div>
+</div>

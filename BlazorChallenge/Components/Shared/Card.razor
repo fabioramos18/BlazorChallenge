@@ -1,0 +1,15 @@
+﻿@namespace BlazorChallenge.Shared
+<div class="content-section">
+    <h3 class="card-title">@Title</h3>
+    <div class="card-content">
+        @ChildContent
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}
